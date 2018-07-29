@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean id="ss" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		 <property name="serviceInterface" value="demo.SampleService"/>
+    <property name="wsdlDocumentUrl" value="http://localhost:8085/?wsdl"/>
+    <property name="namespaceUri" value="http://demo/"/>
+    <property name="serviceName" value="SampleServiceService"/>
+    <property name="portName" value="SampleServicePort"/>
+	</bean>
+</beans>        

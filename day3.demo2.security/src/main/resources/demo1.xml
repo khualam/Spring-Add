@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:security="http://www.springframework.org/schema/security"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		 http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:component-scan base-package="demo"></context:component-scan>
+	<security:global-method-security secured-annotations="enabled" />
+	
+<!-- 	<bean id="simple" class="demo.Simple">
+		<security:intercept-methods>
+			<security:protect method="m1" access="ROLE_admin" />
+			<security:protect  method="m2" access="ROLE_stduser"/>
+		</security:intercept-methods>
+	</bean>
+-->
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="myds" 
+			 users-by-username-query="select username, password, 'true' as enabled from users where username=?"
+			authorities-by-username-query="select users.username, roles.role as role from users, 
+			 roles where users.username =? and roles.username = users.username" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="myds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="url" value="jdbc:hsqldb:hsql://localhost/"></property>
+				<property name="driverClassName" value="org.hsqldb.jdbcDriver"></property>
+				<property name="username" value="sa"></property>
+				<property name="password" value=""></property>
+	</bean>
+	
+</beans>      
+
+
+	<!-- 		<security:user-service>
+				<security:user name="user1" password="pass1" authorities="ROLE_admin" />
+				<security:user name="user2" password="pass2" authorities="ROLE_stduser" />
+				<security:user name="user3" password="pass3" authorities="ROLE_admin, ROLE_stduser" />
+			</security:user-service> -->
+			
+			  

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- 	<bean id="deptdao" class="demo.DeptDAO"  init-method="m1"   >
+		<property name="sf" ref="mysf"></property>
+	</bean> -->
+	
+	
+	<context:annotation-config ></context:annotation-config>
+	<context:component-scan base-package="demo"></context:component-scan>
+	<bean class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mysf"></property>
+	</bean>
+	
+	<bean id="mysf" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myds"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>demo.Dept</value>
+				<value>demo.Emp</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			 <value>
+                hibernate.dialect=org.hibernate.dialect.HSQLDialect
+                hibernate.hbm2ddl.auto=create
+                hibernate.show_sql=true
+            </value>
+		</property>
+	</bean>
+	<bean id="myds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="url" value="jdbc:hsqldb:hsql://localhost/"></property>
+				<property name="driverClassName" value="org.hsqldb.jdbcDriver"></property>
+				<property name="username" value="sa"></property>
+				<property name="password" value=""></property>
+	</bean>
+</beans>        
